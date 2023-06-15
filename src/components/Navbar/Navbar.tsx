@@ -16,8 +16,10 @@ import {
     MenuList,
     Spacer,
     Text,
+    Image
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import logo from '../../assets/logo.png';
 
 
 const Navbar: FC = () => {
@@ -28,7 +30,7 @@ const Navbar: FC = () => {
                 <Flex boxShadow="dark-lg" p="7" alignItems="center" w="100%">
                     {/* Logo */}
                     <Link to="/">
-                        {/* <Image w={120} src={logo} alt="Client logo" /> */}
+                        <Image w={120} src={logo} alt="Client logo" />
                     </Link>
 
                     {/* Navbar Items start */}
@@ -43,13 +45,10 @@ const Navbar: FC = () => {
                             <Text>Add Client</Text>
                         </Link>
 
-                        <Link to="/get-agenda">
+                        <Link to="/viewClients">
                             <Text>View all Client's</Text>
                         </Link>
 
-                        <Link to="import-csv">
-                            <Text>Import CSV</Text>
-                        </Link>
                     </HStack>
                     {/* Navbar Items End */}
 
@@ -70,17 +69,12 @@ const Navbar: FC = () => {
                                     <MenuItem icon={<GrFormAdd />}>Add Client</MenuItem>
                                 </Link>
 
-                                <Link to="/get-agenda">
+                                <Link to="/viewClients">
                                     <MenuItem icon={<BsFillCloudUploadFill />}>
                                         View all Client's
                                     </MenuItem>
                                 </Link>
 
-                                <Link to="import-csv">
-                                    <MenuItem icon={<BsFillCloudDownloadFill />}>
-                                        Import CSV
-                                    </MenuItem>
-                                </Link>
                             </MenuList>
                         </Menu>
                     </Box>

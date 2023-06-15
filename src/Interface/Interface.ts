@@ -1,7 +1,14 @@
 export interface FormDataInterface {
-    name: string;
     contact: string;
+    name: string;
+    avatar: string;
     organization: string;
-    avatar: File | null;
-    assigned: boolean;
+    assignedUser: string;
+    id?: string;
+    status: string;
+
+}
+export interface RequiredField {
+    field: keyof FormDataInterface;
+    message: string;
 }
