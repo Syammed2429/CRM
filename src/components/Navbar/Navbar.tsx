@@ -44,7 +44,7 @@ const Navbar: FC = () => {
                             <Text>Add Client</Text>
                         </Link>
 
-                        <Link to='/viewClients'>
+                        <Link to='/get-all-clients'>
                             <Text>View all Client's</Text>
                         </Link>
 
@@ -68,7 +68,7 @@ const Navbar: FC = () => {
                                     <MenuItem icon={<GrFormAdd />}>Add Client</MenuItem>
                                 </Link>
 
-                                <Link to='/viewClients'>
+                                <Link to='/get-all-clients'>
                                     <MenuItem icon={<BsFillCloudUploadFill />}>
                                         View all Client's
                                     </MenuItem>

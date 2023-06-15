@@ -11,7 +11,7 @@ import { LuSettings2 } from 'react-icons/lu'
 import React from 'react';
 
 
-export const ViewClient: FC = () => {
+export const GetAllClients: FC = () => {
     const [clientDetails, setClientDetails] = useState<{ [key: string]: FormDataInterface }>({})
     const [allClientDetails, setAllClientDetails] = useState<{ [key: string]: FormDataInterface }>({})
     const { isOpen, onOpen, onClose } = useDisclosure();
