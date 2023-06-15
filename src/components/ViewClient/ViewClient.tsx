@@ -18,6 +18,9 @@ export const ViewClient: FC = () => {
     const btnRef = useRef<HTMLButtonElement>(null);
     const [value, setValue] = React.useState<string>('');
     const [filterDate, setFilterDate] = useState<string>('');
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const clientsPerPage: number = 10;
+
 
 
 
@@ -87,6 +90,15 @@ export const ViewClient: FC = () => {
         }
     }, []);
 
+    const indexOfLastClient = currentPage * clientsPerPage;
+    const indexOfFirstClient = indexOfLastClient - clientsPerPage;
+    const currentClients = Object.keys(clientDetails).slice(indexOfFirstClient, indexOfLastClient);
+    const totalPages = Math.ceil(Object.keys(clientDetails).length / clientsPerPage);
+
+    const paginate = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+    };
+
     return (
         <>
             <Box >
@@ -138,7 +150,7 @@ export const ViewClient: FC = () => {
 
                 <SimpleGrid columns={{ base: 1, md: 3, lg: 5 }} spacing='8'>
 
-                    {Object.keys(clientDetails).map((userKey) => (
+                    {currentClients.map((userKey) => (
                         <Box
                             p='10'
                             // w={280}
@@ -168,7 +180,22 @@ export const ViewClient: FC = () => {
                 </SimpleGrid>
 
 
-
+            </Center>
+            <Center mb={9}>
+                <Box mt={4}>
+                    {Array.from({ length: totalPages }).map((_, index) => (
+                        <Button
+                            key={index}
+                            size='sm'
+                            variant='outline'
+                            colorScheme={currentPage === index + 1 ? 'teal' : undefined}
+                            onClick={() => paginate(index + 1)}
+                            mx={1}
+                        >
+                            {index + 1}
+                        </Button>
+                    ))}
+                </Box>
             </Center>
         </>
     );
