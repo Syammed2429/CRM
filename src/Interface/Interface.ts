@@ -6,6 +6,7 @@ export interface FormDataInterface {
     assignedUser: string;
     id?: string;
     status: string;
+    date?: string
 
 }
 export interface RequiredField {

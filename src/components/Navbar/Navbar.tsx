@@ -1,10 +1,9 @@
-import { FC } from "react";
+import { FC } from 'react';
 import {
     BsFillCloudUploadFill,
-    BsFillCloudDownloadFill,
-} from "react-icons/bs";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { GrFormAdd } from "react-icons/gr";
+} from 'react-icons/bs';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { GrFormAdd } from 'react-icons/gr';
 import {
     Box,
     Flex,
@@ -17,8 +16,8 @@ import {
     Spacer,
     Text,
     Image
-} from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+} from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 
 
@@ -27,25 +26,25 @@ const Navbar: FC = () => {
     return (
         <>
             <Box>
-                <Flex boxShadow="dark-lg" p="7" alignItems="center" w="100%">
+                <Flex boxShadow='dark-lg' p='7' alignItems='center' w='100%'>
                     {/* Logo */}
-                    <Link to="/">
-                        <Image w={120} src={logo} alt="Client logo" />
+                    <Link to='/'>
+                        <Image w={120} src={logo} alt='Client logo' />
                     </Link>
 
                     {/* Navbar Items start */}
                     <HStack
-                        display={{ base: "none", md: "flex" }}
-                        position="absolute"
-                        right="4"
-                        spacing="24px"
-                        fontSize="18"
+                        display={{ base: 'none', md: 'flex' }}
+                        position='absolute'
+                        right='4'
+                        spacing='24px'
+                        fontSize='18'
                     >
-                        <Link to="/">
+                        <Link to='/'>
                             <Text>Add Client</Text>
                         </Link>
 
-                        <Link to="/viewClients">
+                        <Link to='/viewClients'>
                             <Text>View all Client's</Text>
                         </Link>
 
@@ -55,21 +54,21 @@ const Navbar: FC = () => {
                     {/* Responsive Navbar items Start*/}
 
                     <Spacer />
-                    <Box display={{ base: "flex", md: "none" }} fontSize="18" gap={4}>
+                    <Box display={{ base: 'flex', md: 'none' }} fontSize='18' gap={4}>
 
                         <Menu>
                             <MenuButton
                                 as={IconButton}
-                                // aria-label="Options"
+                                // aria-label='Options'
                                 icon={<GiHamburgerMenu />}
-                                variant="outline"
+                                variant='outline'
                             />
-                            <MenuList z-index="1">
-                                <Link to="/">
+                            <MenuList z-index='1'>
+                                <Link to='/'>
                                     <MenuItem icon={<GrFormAdd />}>Add Client</MenuItem>
                                 </Link>
 
-                                <Link to="/viewClients">
+                                <Link to='/viewClients'>
                                     <MenuItem icon={<BsFillCloudUploadFill />}>
                                         View all Client's
                                     </MenuItem>
