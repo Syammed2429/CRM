@@ -231,14 +231,13 @@ export const GetAllClients: FC = () => {
                         <Box
                             p='10'
                             w={'280'}
-                            textAlign='center'
                             rounded='lg'
                             boxShadow='dark-lg'
                             key={userKey}
                             mt='4'
                             border='1px solid Teal-100'
                         >
-                            <Text>Contact Information: {clientDetails[userKey].contact}</Text>
+                            <Text>Contact Info: {clientDetails[userKey].contact}</Text>
                             <Text>Name: {clientDetails[userKey].name}</Text>
                             <Center>
 
