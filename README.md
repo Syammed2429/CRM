@@ -24,11 +24,14 @@ This web application is designed to manage client information and provide variou
 2. To add a new client, click on the "Add Client" button.
 3. Fill in the required fields such as contact information, name, organization, and assigned user. You can also provide an avatar URL if available.
 4. Click the "Submit" button to add the client to the list.
-5. To view client detail for each and particular client, click on a "Client Details" button. A new page will appear with detailed information about the selected client.
-6. You can update the client  status information by clicking on the "Toggle Status" button within the client detail card.
+5. To view client details, click on a client card from the list. A modal will appear with detailed information about the selected client.
+6. You can update the client information by clicking on the "Edit" button within the client details modal. Make the necessary changes and click "Save" to update the client.
 7. To filter clients, use the filter options available on the CRM dashboard. You can filter by client status (active/inactive) and date added.
 8. To delete a client, click on the "Delete" button within the client details modal. Confirm the deletion through the alert dialog.
 9. Enjoy managing and organizing your clients with the CRM web application!
+
+## Live Demo
+Click [here](https://example.com) to see the live demo of the CRM web application.
 
 ## Technologies Used
 - React: A JavaScript library for building user interfaces.
@@ -47,3 +50,5 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 4. Push to the branch: `git push origin feature/your-feature`
 5. Submit a pull request
 
+## License
+This project is licensed under the [MIT License](LICENSE).
