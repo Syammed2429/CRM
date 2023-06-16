@@ -1,41 +1,65 @@
 import {
-    Box, Button, Center, Drawer, DrawerBody,
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogOverlay,
+    Box, Button, Card, CardBody, CardHeader, Center, Drawer, DrawerBody,
     DrawerCloseButton, DrawerContent, DrawerFooter,
     DrawerHeader, DrawerOverlay, Flex, Image, Input, Radio, RadioGroup,
-    SimpleGrid, Stack, Text, useDisclosure,
+    SimpleGrid, Spacer, Stack, Text, useDisclosure,
 } from '@chakra-ui/react';
 import { FC, useEffect, useRef, useState } from 'react';
 import { FormDataInterface } from '../../Interface/Interface';
 
 import { LuSettings2 } from 'react-icons/lu'
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 
 export const GetAllClients: FC = () => {
     const [clientDetails, setClientDetails] = useState<{ [key: string]: FormDataInterface }>({})
     const [allClientDetails, setAllClientDetails] = useState<{ [key: string]: FormDataInterface }>({})
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const btnRef = useRef<HTMLButtonElement>(null);
-    const [value, setValue] = React.useState<string>('');
+    const [isOpened, setIsOpened] = useState<boolean>(false);
+    const deleteCancelRef = useRef<HTMLButtonElement | null>(null);
+    const filterOpenRRef = useRef<HTMLButtonElement>(null);
+    const [value, setValue] = useState<string>('');
     const [filterDate, setFilterDate] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
     const clientsPerPage: number = 10;
+    const navigate = useNavigate();
+    const [deleteClientId, setDeleteClientId] = useState<string>('');
 
 
 
 
-
-
+    /**
+     * Function to handle deleting a client start
+     * @param id 
+     */
     const handleDelete = (id: string) => {
+        setDeleteClientId(id);
+        setIsOpened(true)
+    };
+    const handleConfirmDelete = () => {
         const existingDataString = localStorage.getItem('formData');
         if (existingDataString) {
             const existingData = JSON.parse(existingDataString) as { [key: string]: FormDataInterface };
-            delete existingData[id];
+            delete existingData[deleteClientId];
             localStorage.setItem('formData', JSON.stringify(existingData));
             setClientDetails(existingData);
         }
+        setIsOpened(false);
     };
 
+    // Function to handle deleting a client end
+
+    /**
+     * Function to handle toggling the status of a client start
+     * @param id 
+     */
     const handleStatusToggle = (id: string) => {
         const updatedClientDetails = { ...clientDetails };
         updatedClientDetails[id].status = updatedClientDetails[id].status === 'active' ? 'inactive' : 'active';
@@ -43,8 +67,11 @@ export const GetAllClients: FC = () => {
         localStorage.setItem('formData', JSON.stringify(updatedClientDetails));
     };
 
+    // Function to handle toggling the status of a client end
 
 
+
+    // Function to handle filtering the client details based on status and date start
 
     const handleDrawerFilter = () => {
         let filteredData = Object.values(allClientDetails);
@@ -74,6 +101,10 @@ export const GetAllClients: FC = () => {
         onClose();
     };
 
+    // Function to handle filtering the client details based on status and date end
+
+
+    // Function to reset the filters and display all client details
     const handleReset = () => {
         setValue('');
         setFilterDate('');
@@ -81,6 +112,15 @@ export const GetAllClients: FC = () => {
         onClose();
     };
 
+    /**
+     *  Function to navigate to the details page of a specific client
+     * @param id 
+     */
+    const viewEachClient = (id: string) => {
+        navigate(`/client/${id}`);
+    };
+
+    // Fetch and set client details from localStorage on component mount
     useEffect(() => {
         const existingData = localStorage.getItem('formData');
         if (existingData) {
@@ -93,6 +133,7 @@ export const GetAllClients: FC = () => {
     const indexOfLastClient = currentPage * clientsPerPage;
     const indexOfFirstClient = indexOfLastClient - clientsPerPage;
     const currentClients = Object.keys(clientDetails).slice(indexOfFirstClient, indexOfLastClient);
+    console.log('currentClients:', currentClients.length)
     const totalPages = Math.ceil(Object.keys(clientDetails).length / clientsPerPage);
 
     const paginate = (pageNumber: number) => {
@@ -102,15 +143,49 @@ export const GetAllClients: FC = () => {
     return (
         <>
             <Box >
+                {/* displaying the message if it got no clients start */}
+                {!currentClients.length ? (
+                    <Center
+                        display='flex'
+                        justifyContent='center'
+                        alignItems='center'
+                        minHeight='80vh'
+                    >
+                        <Card
+                            bg='cyan.800'
+                            alignItems='center'
+                        >
+                            <CardHeader>
+                                There are currently no clients added.
+                            </CardHeader>
+                            <CardBody>
+                                Add a new client by going to Add Client
+                            </CardBody>
+                        </Card>
+                        {/* displaying the message if it got no clients end */}
+                    </Center>
+
+                ) :
+
+
+                    <Flex>
+                        <Spacer />
+                        <Button
+                            mx={6}
+                            my={2}
+                            ref={filterOpenRRef} leftIcon={<LuSettings2 />} colorScheme='teal' mt={3} onClick={onOpen}>
+                            Filters
+                        </Button>
+                    </Flex>
+                }
+
+                {/* Filter start */}
                 <Center>
-                    <Button ref={btnRef} leftIcon={<LuSettings2 />} colorScheme='teal' mt={3} onClick={onOpen}>
-                        Filters
-                    </Button>
                     <Drawer
                         isOpen={isOpen}
                         placement='right'
                         onClose={onClose}
-                        finalFocusRef={btnRef}
+                        finalFocusRef={filterOpenRRef}
                     >
                         <DrawerOverlay />
                         <DrawerContent>
@@ -144,16 +219,18 @@ export const GetAllClients: FC = () => {
                     </Drawer>
 
                 </Center>
+                {/* Filter end */}
+
             </Box >
-            <Center p={4} >
+            {/* Displaying all the clients list start */}
+            <Center px={2} bg='whiteAlpha.200'>
 
 
                 <SimpleGrid columns={{ base: 1, md: 3, lg: 5 }} spacing='8'>
-
                     {currentClients.map((userKey) => (
                         <Box
                             p='10'
-                            // w={280}
+                            w={'280'}
                             textAlign='center'
                             rounded='lg'
                             boxShadow='dark-lg'
@@ -163,24 +240,34 @@ export const GetAllClients: FC = () => {
                         >
                             <Text>Contact Information: {clientDetails[userKey].contact}</Text>
                             <Text>Name: {clientDetails[userKey].name}</Text>
-                            <Image src={clientDetails[userKey].avatar} alt='Profile' />
+                            <Center>
+
+                                <Image
+                                    borderRadius={5}
+                                    boxSize='150px'
+                                    objectFit='cover'
+                                    src={clientDetails[userKey].avatar}
+                                    alt={clientDetails[userKey].name + ' image'} />
+                            </Center>
                             <Text>Organization: {clientDetails[userKey].organization}</Text>
                             <Text>Assigned User: {clientDetails[userKey].assignedUser}</Text>
                             <Text>Status: {clientDetails[userKey].status}</Text>
-                            <Flex justifyContent='space-between' py={4} >
-
-                                <Button colorScheme='red' mx={2} onClick={() => handleDelete(clientDetails[userKey].id as string)}>Delete</Button>
-                                <Button colorScheme='blue' onClick={() => handleStatusToggle(clientDetails[userKey].id as string)}>
+                            <Stack w='90' py={2} >
+                                <Button size='sm' colorScheme='red' mx={2} onClick={() => handleDelete(clientDetails[userKey].id as string)}>Delete</Button>
+                                {/* <Button size='sm' colorScheme='red' mx={2} onClick={onsOpen}>Delete</Button> */}
+                                <Button size='sm' colorScheme='blue' onClick={() => handleStatusToggle(clientDetails[userKey].id as string)}>
                                     Toggle Status
                                 </Button>
-                            </Flex>
-                            <Button colorScheme='green'>View Client Details</Button>
+                                <Button size='sm' colorScheme='green' onClick={() => viewEachClient(clientDetails[userKey].id as string)}>Client Details</Button>
+                            </Stack>
                         </Box>
                     ))}
                 </SimpleGrid>
+            </Center >
+            {/* Displaying all the clients list end */}
 
 
-            </Center>
+            {/* Pagination start */}
             <Center mb={9}>
                 <Box mt={4}>
                     {Array.from({ length: totalPages }).map((_, index) => (
@@ -197,6 +284,39 @@ export const GetAllClients: FC = () => {
                     ))}
                 </Box>
             </Center>
+            {/* Pagination end */}
+
+
+            {/* Delete alert start */}
+            <AlertDialog
+                motionPreset="slideInBottom"
+                leastDestructiveRef={deleteCancelRef}
+                onClose={() => setIsOpened(false)}
+                isOpen={isOpened}
+                isCentered
+            >
+                <AlertDialogOverlay>
+                    <AlertDialogContent>
+                        <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                            Delete Client
+                        </AlertDialogHeader>
+                        <AlertDialogBody>
+                            Are you sure ? You can't undo this action afterwards.
+                        </AlertDialogBody>
+                        <AlertDialogFooter >
+                            <Button mx={5} ref={deleteCancelRef} onClick={() => setIsOpened(false)}>
+                                Cancel
+                            </Button>
+                            <Button colorScheme="red" onClick={handleConfirmDelete}>
+                                Delete
+                            </Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialogOverlay>
+            </AlertDialog>
+            {/* Delete alert end */}
+
+
         </>
     );
 }
