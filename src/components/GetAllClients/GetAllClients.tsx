@@ -144,7 +144,18 @@ export const GetAllClients: FC = () => {
         <>
             <Box >
                 {/* displaying the message if it got no clients start */}
-                {!currentClients.length ? (
+
+
+                <Flex>
+                    <Spacer />
+                    <Button
+                        mx={6}
+                        my={2}
+                        ref={filterOpenRRef} leftIcon={<LuSettings2 />} colorScheme='teal' mt={3} onClick={onOpen}>
+                        Filters
+                    </Button>
+                </Flex>
+                {!currentClients.length && (
                     <Center
                         display='flex'
                         justifyContent='center'
@@ -156,27 +167,21 @@ export const GetAllClients: FC = () => {
                             alignItems='center'
                         >
                             <CardHeader>
-                                There are currently no clients added.
+                                There are currently no clients.
                             </CardHeader>
                             <CardBody>
-                                Add a new client by going to Add Client
+                                <Text>
+                                    Add a new client by navigating to the "Add Client" section.
+                                </Text>
+                                <Text>If you have added a filter, please update the filter accordingly.</Text>
                             </CardBody>
+
                         </Card>
                         {/* displaying the message if it got no clients end */}
                     </Center>
 
-                ) :
+                )
 
-
-                    <Flex>
-                        <Spacer />
-                        <Button
-                            mx={6}
-                            my={2}
-                            ref={filterOpenRRef} leftIcon={<LuSettings2 />} colorScheme='teal' mt={3} onClick={onOpen}>
-                            Filters
-                        </Button>
-                    </Flex>
                 }
 
                 {/* Filter start */}
