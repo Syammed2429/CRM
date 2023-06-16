@@ -47,6 +47,8 @@ export const AddClient: React.FC = () => {
     const [success, setSuccess] = useState<boolean>(false);
     //     //AlertDialog
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const MAX_CHARACTER_LIMIT: number = 30;
+
 
 
 
@@ -57,6 +59,7 @@ export const AddClient: React.FC = () => {
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
+
         if (name === 'avatar') {
             if (
                 value.trim() !== '' &&
@@ -73,6 +76,11 @@ export const AddClient: React.FC = () => {
         } else {
             if (value.trim() === '' && requiredFields.find((field) => field.field === name)) {
                 setFormErrors((prevErrors) => ({ ...prevErrors, [name]: `${name} is required` }));
+            } else if (value.length > MAX_CHARACTER_LIMIT) {
+                setFormErrors((prevErrors) => ({
+                    ...prevErrors,
+                    [name]: `Maximum ${MAX_CHARACTER_LIMIT} characters allowed`,
+                }));
             } else {
                 setFormErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
             }
@@ -141,7 +149,7 @@ export const AddClient: React.FC = () => {
                             value={formData.contact}
                             onChange={handleInputChange}
                         />
-                        <FormErrorMessage>{formErrors.contact && formErrors.contact}</FormErrorMessage>
+                        <FormErrorMessage>{formErrors.contact}</FormErrorMessage>
                     </FormControl>
 
 
@@ -206,8 +214,18 @@ export const AddClient: React.FC = () => {
                         <FormErrorMessage>{formErrors.assignedUser}</FormErrorMessage>
 
                     </FormControl>
-
-                    <Button mt="4" colorScheme="teal" type="submit">
+                    <Button
+                        mt="4"
+                        colorScheme="teal"
+                        type="submit"
+                        isDisabled={
+                            !!formErrors.contact ||
+                            !!formErrors.name ||
+                            !!formErrors.organization ||
+                            formData.name.length > MAX_CHARACTER_LIMIT ||
+                            formData.organization.length > MAX_CHARACTER_LIMIT
+                        }
+                    >
                         Submit
                     </Button>
                 </form>
