@@ -1,9 +1,8 @@
 import { FC } from 'react';
 import {
-    BsFillCloudUploadFill,
-} from 'react-icons/bs';
+    AiOutlineEye, AiOutlineUserAdd
+} from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { GrFormAdd } from 'react-icons/gr';
 import {
     Box,
     Flex,
@@ -65,11 +64,11 @@ const Navbar: FC = () => {
                             />
                             <MenuList z-index='1'>
                                 <Link to='/'>
-                                    <MenuItem icon={<GrFormAdd />}>Add Client</MenuItem>
+                                    <MenuItem icon={<AiOutlineUserAdd />}>Add Client</MenuItem>
                                 </Link>
 
                                 <Link to='/get-all-clients'>
-                                    <MenuItem icon={<BsFillCloudUploadFill />}>
+                                    <MenuItem icon={<AiOutlineEye />}>
                                         View all Client's
                                     </MenuItem>
                                 </Link>
