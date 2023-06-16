@@ -16,10 +16,11 @@ const theme = extendTheme({
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <ChakraProvider theme={theme}>
+      <ChakraProvider>
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <App />
       </ChakraProvider>
+
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
