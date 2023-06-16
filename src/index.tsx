@@ -7,8 +7,8 @@ import { ChakraProvider, ColorModeScript, ThemeConfig, extendTheme } from '@chak
 import { BrowserRouter } from 'react-router-dom';
 
 const config: ThemeConfig = {
-  initialColorMode: 'system',
-  useSystemColorMode: true,
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
 }
 
 // 3. extend the theme
@@ -18,8 +18,8 @@ const theme = extendTheme({ config })
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ChakraProvider>
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <ChakraProvider theme={theme}>
+        {/* <ColorModeScript initialColorMode={theme.config.initialColorMode} /> */}
         <App />
       </ChakraProvider>
 
