@@ -31,7 +31,7 @@ This web application is designed to manage client information and provide variou
 9. Enjoy managing and organizing your clients with the CRM web application!
 
 ## Live Demo
-Click [here](https://example.com) to see the live demo of the CRM web application.
+Click [here](https://crm-kerrybli.vercel.app/) to see the live demo of the CRM web application.
 
 ## Technologies Used
 - React: A JavaScript library for building user interfaces.
