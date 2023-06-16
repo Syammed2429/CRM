@@ -1,46 +1,49 @@
-# Getting Started with Create React App
+# CRM Web Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
+This web application is designed to manage client information and provide various functionalities for organizing and filtering client data. Users can add new clients, view client details, update client information, and perform actions like sorting, filtering, and deleting clients. The application uses React with TypeScript and Chakra UI for the frontend and utilizes local storage to persist client data. The application is also mobile responsive, providing a seamless experience across different devices.
 
-## Available Scripts
+## Features
+- Add new clients: Users can enter client details, including contact information, name, organization, assigned user, and avatar URL.
+- View client details: Users can click on a client card to view the detailed information of a specific client.
+- Update client information: Users can change the status of the client from active to inactive and vice versa.
+- Filter clients: Users can filter clients based on their status (active/inactive) and date added.
+- Delete clients: Users can delete clients, and the deletion action can be confirmed through an alert dialog.
 
-In the project directory, you can run:
+## Installation
+1. Clone the repository: `git clone <repository-url>`
+2. Navigate to the project directory: `cd web-application`
+3. Install dependencies: `npm install`
 
-### `npm start`
+## Usage
+1. Start the development server: `npm start`
+2. Open your web browser and visit: `http://localhost:3000`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Instructions
+1. Once the web application is running, you will see the CRM dashboard.
+2. To add a new client, click on the "Add Client" button.
+3. Fill in the required fields such as contact information, name, organization, and assigned user. You can also provide an avatar URL if available.
+4. Click the "Submit" button to add the client to the list.
+5. To view client detail for each and particular client, click on a "Client Details" button. A new page will appear with detailed information about the selected client.
+6. You can update the client  status information by clicking on the "Toggle Status" button within the client detail card.
+7. To filter clients, use the filter options available on the CRM dashboard. You can filter by client status (active/inactive) and date added.
+8. To delete a client, click on the "Delete" button within the client details modal. Confirm the deletion through the alert dialog.
+9. Enjoy managing and organizing your clients with the CRM web application!
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Technologies Used
+- React: A JavaScript library for building user interfaces.
+- TypeScript: A typed superset of JavaScript that compiles to plain JavaScript.
+- Chakra UI: A simple, modular, and accessible component library for React.
+- Local Storage: A web API used to store data in the browser.
 
-### `npm test`
+## Mobile Responsiveness
+This CRM web application is designed to be fully responsive, ensuring a seamless user experience across various devices, including desktops, tablets, and mobile devices.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Contributing
+Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m 'Add your feature'`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Submit a pull request
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
