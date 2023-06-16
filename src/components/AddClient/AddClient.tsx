@@ -1,5 +1,6 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import { nanoid } from 'nanoid';
+import React, { useState, useRef, ChangeEvent, FormEvent } from 'react';
 import {
     AlertDialog,
     AlertDialogBody,
@@ -19,7 +20,6 @@ import {
     useDisclosure
 } from '@chakra-ui/react';
 import { FormDataInterface, RequiredField } from '../../Interface/Interface';
-import { nanoid } from 'nanoid';
 
 
 
@@ -43,38 +43,50 @@ export const AddClient: React.FC = () => {
         { field: 'assignedUser', message: 'Assigned user is required' }]
     )
     const [formErrors, setFormErrors] = useState<Partial<FormDataInterface>>({});
-    const [savedData, setSavedData] = useState<{ [key: string]: FormDataInterface }>({});
     const cancelRef: any = useRef();
     const [success, setSuccess] = useState<boolean>(false);
-
-
     //     //AlertDialog
     const { isOpen, onOpen, onClose } = useDisclosure();
 
 
 
-    useEffect(() => {
-        const existingData = localStorage.getItem('formData');
-        if (existingData) {
-            setSavedData(JSON.parse(existingData));
-        }
-    }, []);
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-
+    /**
+     * A function to get the input details and check for the validation start
+     * @param e 
+     */
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
-        if (value.trim() === '' && requiredFields.find((field) => field.field === name)) {
-            setFormErrors((prevErrors) => ({ ...prevErrors, [name]: `${name} is required` }));
+        if (name === 'avatar') {
+            if (
+                value.trim() !== '' &&
+                !value.startsWith('https://') &&
+                !value.startsWith('http://')
+            ) {
+                setFormErrors((prevErrors) => ({
+                    ...prevErrors,
+                    [name]: 'Avatar URL must start with "https://" or "http://"',
+                }));
+            } else {
+                setFormErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
+            }
         } else {
-            setFormErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
+            if (value.trim() === '' && requiredFields.find((field) => field.field === name)) {
+                setFormErrors((prevErrors) => ({ ...prevErrors, [name]: `${name} is required` }));
+            } else {
+                setFormErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
+            }
         }
-
     };
+    //  * A function to get the input details and check for the validation end
 
 
 
-    const handleSubmit = (e: React.FormEvent) => {
+    /**
+     * A function to store the client details once clicked on the save button start
+     * @param e 
+     */
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         const errors: Partial<FormDataInterface> = {};
 
@@ -87,7 +99,7 @@ export const AddClient: React.FC = () => {
         setFormErrors(errors);
         if (Object.keys(errors).length === 0) {
             const userKey = nanoid();
-            const newUser = { ...formData, status: 'active', id: userKey };
+            const newUser = { ...formData, status: 'active', date: new Date(), id: userKey };
             const savedDataFromLocalStorage = localStorage.getItem('formData');
             const parsedSavedData = savedDataFromLocalStorage
                 ? JSON.parse(savedDataFromLocalStorage)
@@ -105,22 +117,27 @@ export const AddClient: React.FC = () => {
                 assignedUser: '',
                 status: 'active'
             });
-            setSavedData(newSavedData); // Update the saved data state with newSavedData
         }
     };
+    //  * A function to store the client details once clicked on the save button end
+
 
 
     return (
         <>
 
             <Box maxWidth="400px" mx="auto" p="4">
+                {/* Input form fields start */}
                 <form onSubmit={handleSubmit}>
                     <FormControl isInvalid={!!formErrors.contact}>
                         <FormLabel htmlFor="contact">Contact Information</FormLabel>
                         <Input
+                            autoFocus={true}
+                            autoComplete='off'
                             id="contact"
                             name="contact"
                             type="text"
+                            placeholder='Enter the email or phone number'
                             value={formData.contact}
                             onChange={handleInputChange}
                         />
@@ -131,9 +148,11 @@ export const AddClient: React.FC = () => {
                     <FormControl mt="4" isInvalid={!!formErrors.name}>
                         <FormLabel htmlFor="name">Name</FormLabel>
                         <Input
+                            autoComplete='off'
                             id="name"
                             name="name"
                             type="text"
+                            placeholder='Enter client name'
                             value={formData.name}
                             onChange={handleInputChange}
                         />
@@ -143,6 +162,8 @@ export const AddClient: React.FC = () => {
                     <FormControl mt="4" isInvalid={!!formErrors.avatar}>
                         <FormLabel htmlFor="avatar">Avatar URL</FormLabel>
                         <Input
+                            autoComplete='off'
+                            placeholder='Enter avatar url'
                             id="avatar"
                             name="avatar"
                             type="text"
@@ -156,6 +177,8 @@ export const AddClient: React.FC = () => {
                     <FormControl mt="4" isInvalid={!!formErrors.organization}>
                         <FormLabel htmlFor="organization">Organization</FormLabel>
                         <Input
+                            autoComplete='off'
+                            placeholder='Enter the organization name'
                             id="organization"
                             name="organization"
                             type="text"
@@ -188,6 +211,8 @@ export const AddClient: React.FC = () => {
                         Submit
                     </Button>
                 </form>
+                {/* Input form fields end */}
+
 
 
                 {/* Alert Dialog Start*/}
